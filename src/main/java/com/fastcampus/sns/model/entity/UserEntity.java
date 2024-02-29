@@ -2,6 +2,7 @@ package com.fastcampus.sns.model.entity;
 
 import com.fastcampus.sns.model.UserRole;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -12,7 +13,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "\"user\"") // Table명
-/**
+/*
  * \" ~ \"로 감싸는 이유
  * DB로 사용할 PostgreSQL에 user table이 이미 존재하므로, 구분해야 함
   */
@@ -21,6 +22,7 @@ import java.time.Instant;
 @Setter
 @SQLDelete(sql = "UPDATED \"user\" SET deleted_at = NOW() where id=?")
 @Where(clause = "deleted_at is NULL")
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
@@ -53,15 +55,15 @@ public class UserEntity {
         this.registeredAt = Timestamp.from(Instant.now());
     }
 
-    @PrePersist
+    @PreUpdate
     void updatedAt() {
         this.updatedAt = Timestamp.from(Instant.now());
     }
 
-    @PrePersist
-    void deletedAt() {
-        this.deletedAt = Timestamp.from(Instant.now());
-    }
+//    @PrePersist
+//    void deletedAt() {
+//        this.deletedAt = Timestamp.from(Instant.now());
+//    }
 
     /*.
     UserEntity를 신규 생성하는 메서드
