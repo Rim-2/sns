@@ -10,6 +10,6 @@ public class UserEntityFixture {
         result.setUserName(userName);
         result.setPassword(password);
 
-        return result
+        return result;
     }
 }
